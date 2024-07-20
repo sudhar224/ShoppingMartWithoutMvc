@@ -122,10 +122,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AddProductController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\tbl_signin_signupController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AddProduct.cs" />
+    <Compile Include="Models\tbl_signin_signup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -186,6 +188,10 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\AddProduct\Create.cshtml" />
     <Content Include="Views\AddProduct\Index.cshtml" />
+    <Content Include="Views\AddProduct\Details.cshtml" />
+    <Content Include="Views\AddProduct\Edit.cshtml" />
+    <Content Include="Views\AddProduct\Delete.cshtml" />
+    <Content Include="Views\tbl_signin_signup\SignUp.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

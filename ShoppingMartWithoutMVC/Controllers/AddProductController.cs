@@ -26,6 +26,7 @@ namespace ShoppingMartWithoutMVC.Controllers
                 {
                     addProducts_obj.Add(new AddProduct
                     {
+                        id = Convert.ToInt32( sdr["id"].ToString()),
                         product_id = Convert.ToInt32(sdr["product_id"].ToString()),
                         product_name = sdr["product_name"].ToString(),
                         price = (sdr["price"].ToString()),
@@ -43,7 +44,27 @@ namespace ShoppingMartWithoutMVC.Controllers
         // GET: AddProduct/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            AddProduct addProduct_obj = new AddProduct();
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                SqlCommand cmd = new SqlCommand("sp_product_details "+id, con);
+                con.Open();
+                SqlDataReader sdr = cmd.ExecuteReader();
+                while(sdr.Read())
+                {
+                    addProduct_obj = new AddProduct
+                    {
+                        id = Convert.ToInt32( sdr["id"].ToString()),
+                        img_path = sdr["img_path"].ToString(),
+                        product_id = Convert.ToInt32(sdr["product_id"].ToString()),
+                        product_name = sdr["product_name"].ToString(),
+                        price = sdr["price"].ToString()
+                    };
+                }
+                sdr.Close();
+                con.Close();
+            }
+            return View(addProduct_obj);
         }
 
         // GET: AddProduct/Create
@@ -99,17 +120,41 @@ namespace ShoppingMartWithoutMVC.Controllers
         // GET: AddProduct/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            AddProduct addProduct_obj = new AddProduct();
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                SqlCommand cmd = new SqlCommand("sp_product_details " + id, con);
+                con.Open();
+                SqlDataReader sdr = cmd.ExecuteReader();
+                while (sdr.Read())
+                {
+                    addProduct_obj = new AddProduct
+                    {
+                        img_path = sdr["img_path"].ToString(),
+                        product_id = Convert.ToInt32(sdr["product_id"].ToString()),
+                        product_name = sdr["product_name"].ToString(),
+                        price = sdr["price"].ToString()
+                    };
+                }
+                sdr.Close();
+                con.Close();
+            }
+            return View(addProduct_obj);
         }
 
         // POST: AddProduct/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, AddProduct AddProduct_obj)
         {
             try
             {
-                // TODO: Add update logic here
-
+                using(SqlConnection con = new SqlConnection(constr))
+                {
+                    string query = "sp_edit_product " +id+ "," +AddProduct_obj.product_id+ ", '" +AddProduct_obj.product_name+ "',"+ AddProduct_obj.price;
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
                 return RedirectToAction("Index");
             }
             catch
@@ -121,16 +166,41 @@ namespace ShoppingMartWithoutMVC.Controllers
         // GET: AddProduct/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            AddProduct addProduct_obj = new AddProduct();
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                SqlCommand cmd = new SqlCommand("sp_product_details " + id, con);
+                con.Open();
+                SqlDataReader sdr = cmd.ExecuteReader();
+                while (sdr.Read())
+                {
+                    addProduct_obj = new AddProduct
+                    {
+                        img_path = sdr["img_path"].ToString(),
+                        product_id = Convert.ToInt32(sdr["product_id"].ToString()),
+                        product_name = sdr["product_name"].ToString(),
+                        price = sdr["price"].ToString()
+                    };
+                }
+                sdr.Close();
+                con.Close();
+            }
+            return View(addProduct_obj);
         }
 
         // POST: AddProduct/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, AddProduct AddProduct_obj)
         {
             try
             {
-                // TODO: Add delete logic here
+                using(SqlConnection con = new SqlConnection(constr))
+                {
+                    SqlCommand cmd = new SqlCommand("sp_delete_product " + id, con);
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
 
                 return RedirectToAction("Index");
             }
