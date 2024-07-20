@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Data.SqlClient;
 using System.Configuration;
 using ShoppingMartWithoutMVC.Models;
+using System.IO;
 
 namespace ShoppingMartWithoutMVC.Controllers
 {
@@ -35,6 +36,7 @@ namespace ShoppingMartWithoutMVC.Controllers
                 sdr.Close();
                 con.Close();
             }
+
             return View(addProducts_obj);
         }
 
@@ -58,10 +60,12 @@ namespace ShoppingMartWithoutMVC.Controllers
             {
                 if (AddProduct_obj.ImageFile != null && AddProduct_obj.ImageFile.ContentLength > 0)
                 {
-                    var fileName = System.IO.Path.GetFileName(AddProduct_obj.ImageFile.FileName);
-                    var path = System.IO.Path.Combine(Server.MapPath("Images"), fileName);
-                    AddProduct_obj.ImageFile.SaveAs(path);
-                    AddProduct_obj.img_path = fileName;
+                    string fileName = Path.GetFileNameWithoutExtension(AddProduct_obj.ImageFile.FileName);
+                    string extension = Path.GetExtension(AddProduct_obj.ImageFile.FileName);
+                    fileName = fileName + extension;
+                    AddProduct_obj.img_path = "~/Image/" + fileName;
+                    fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
+                    AddProduct_obj.ImageFile.SaveAs(fileName);
                 }
            
 
@@ -73,6 +77,7 @@ namespace ShoppingMartWithoutMVC.Controllers
                     if(a > 0)
                     {
                         Response.Write("Product Added");
+                        return RedirectToAction("Index");
                     }
                     else
                     {
