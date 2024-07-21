@@ -192,6 +192,8 @@
     <Content Include="Views\AddProduct\Edit.cshtml" />
     <Content Include="Views\AddProduct\Delete.cshtml" />
     <Content Include="Views\tbl_signin_signup\SignUp.cshtml" />
+    <Content Include="Views\tbl_signin_signup\SignIn.cshtml" />
+    <Content Include="Views\AddProduct\UserProductView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

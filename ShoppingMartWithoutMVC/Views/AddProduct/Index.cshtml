@@ -9,7 +9,7 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+@*<table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.id)
@@ -27,31 +27,85 @@
             @Html.DisplayNameFor(model => model.img_path)
         </th>
         <th></th>
-    </tr>
+    </tr>*@
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.product_id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.product_name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.price)
-        </td>
-        <td>
-            <img src="@Url.Content(item.img_path)" width="250" height="250" />
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.id })
-        </td>
-    </tr>
-}
+<div class="items-container">
+    @foreach (var item in Model)
+    {
+        @*<tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.product_id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.product_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.price)
+                </td>
+                <td>
+                    <img src="@Url.Content(item.img_path)" width="250" height="250" />
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                </td>
+            </tr>*@
 
-</table>
+
+
+
+        <div class="item">
+            <dl>
+               
+                <dd>
+                    <img src="@Url.Content(item.img_path)" width="250" height="250" />
+                </dd>
+                <dt>@Html.DisplayNameFor(model => model.id)</dt>
+                <dd>@Html.DisplayFor(modelItem => item.id)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.product_id)</dt>
+                <dd>@Html.DisplayFor(modelItem => item.product_id)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.product_name)</dt>
+                <dd>@Html.DisplayFor(modelItem => item.product_name)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.price)</dt>
+                <dd>@Html.DisplayFor(modelItem => item.price)</dd>
+                <dt>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id })
+                    @Html.ActionLink("Details", "Details", new { id = item.id })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                </dt>
+
+            </dl>
+        </div>
+    }
+</div>
+
+<style>
+    .items-container {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .item {
+        margin: 10px;
+        flex: 0 0 250px; /* Adjust width as necessary */
+    }
+
+    dl {
+        display: flex;
+        flex-direction: column;
+    }
+
+    dt, dd {
+        margin: 0;
+    }
+</style>
+
+
+@*</table>*@

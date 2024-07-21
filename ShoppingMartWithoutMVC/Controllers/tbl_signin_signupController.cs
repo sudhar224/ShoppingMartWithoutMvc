@@ -54,6 +54,51 @@ namespace ShoppingMartWithoutMVC.Controllers
             }
         }
 
+        // GET: tbl_signin_signup/Create
+        public ActionResult SignIn()
+        {
+            return View();
+        }
+
+        // POST: tbl_signin_signup/Create
+        [HttpPost]
+        public ActionResult SignIn(tbl_signin_signup signin_Obj)
+        {
+            try
+            {
+                string username = "";
+                using (SqlConnection con = new SqlConnection(constr))
+                {
+                    con.Open();
+                    string query = "sp_sigIn '" + signin_Obj.user_name + "','" + signin_Obj.password + "' ";
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    SqlDataReader sdr = cmd.ExecuteReader();
+                    while(sdr.Read())
+                    {
+                        username = sdr[0].ToString();
+                        Session["uname"] = username;
+                    }
+                    if(username != null)
+                    {
+                        return RedirectToAction("Index", "AddProduct");
+                    }
+                    else
+                    {
+                        ViewBag.message = "Loginfail";
+                        return View();
+                    }
+                    con.Close();
+                }
+
+                //return RedirectToAction("Index");
+               
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
         // GET: tbl_signin_signup/Edit/5
         public ActionResult Edit(int id)
         {

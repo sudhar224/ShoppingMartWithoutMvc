@@ -209,5 +209,32 @@ namespace ShoppingMartWithoutMVC.Controllers
                 return View();
             }
         }
+
+        public ActionResult UserProductView()
+        {
+            List<AddProduct> addProducts_obj = new List<AddProduct>();
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                SqlCommand cmd = new SqlCommand("sp_display_product", con);
+                con.Open();
+                SqlDataReader sdr = cmd.ExecuteReader();
+                while (sdr.Read())
+                {
+                    addProducts_obj.Add(new AddProduct
+                    {
+                        id = Convert.ToInt32(sdr["id"].ToString()),
+                        product_id = Convert.ToInt32(sdr["product_id"].ToString()),
+                        product_name = sdr["product_name"].ToString(),
+                        price = (sdr["price"].ToString()),
+                        img_path = sdr["img_path"].ToString()
+
+                    });
+                }
+                sdr.Close();
+                con.Close();
+            }
+
+            return View(addProducts_obj);
+        }
     }
 }

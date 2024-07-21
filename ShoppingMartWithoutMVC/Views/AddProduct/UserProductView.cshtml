@@ -1,0 +1,70 @@
+﻿@model IEnumerable<ShoppingMartWithoutMVC.Models.AddProduct>
+
+@{
+    ViewBag.Title = "UserProductView";
+}
+
+<h2>UserProductView</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div class="items-container">
+    @foreach (var item in Model)
+    {
+       
+        <div class="item">
+            <dl>
+
+                <dd>
+                    <img src="@Url.Content(item.img_path)" width="250" height="250" />
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.product_id) :
+                    @Html.DisplayFor(modelItem => item.product_id)
+                </dt>
+                <dd></dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.product_name) :
+                    @Html.DisplayFor(modelItem => item.product_name)
+                </dt>
+                <dd></dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.price) :
+                    @Html.DisplayFor(modelItem => item.price)
+                </dt>
+                <dd></dd>
+
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) 
+   
+                </td>
+            </dl>
+        </div>
+    }
+</div>
+
+<style>
+    .items-container {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .item {
+        margin: 10px;
+        flex: 0 0 250px; /* Adjust width as necessary */
+    }
+
+    dl {
+        display: flex;
+        flex-direction: column;
+    }
+
+    dt, dd {
+        margin: 0;
+    }
+</style>
+
