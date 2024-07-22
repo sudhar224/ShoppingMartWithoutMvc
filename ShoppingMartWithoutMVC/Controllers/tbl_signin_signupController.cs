@@ -75,12 +75,12 @@ namespace ShoppingMartWithoutMVC.Controllers
                     SqlDataReader sdr = cmd.ExecuteReader();
                     while(sdr.Read())
                     {
-                        username = sdr[0].ToString();
+                        username = sdr["user_name"].ToString();
                         Session["uname"] = username;
                     }
                     if(username != null)
                     {
-                        return RedirectToAction("Index", "AddProduct");
+                        return RedirectToAction("UserProductView", "AddProduct");
                     }
                     else
                     {

@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using ShoppingMartWithoutMVC.Models;
 using System.IO;
+using System.Data;
 
 namespace ShoppingMartWithoutMVC.Controllers
 {
@@ -212,6 +213,7 @@ namespace ShoppingMartWithoutMVC.Controllers
 
         public ActionResult UserProductView()
         {
+            ViewBag.LoginUser = Session["uname"];
             List<AddProduct> addProducts_obj = new List<AddProduct>();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -232,6 +234,77 @@ namespace ShoppingMartWithoutMVC.Controllers
                 }
                 sdr.Close();
                 con.Close();
+            }
+
+            return View(addProducts_obj);
+        }
+
+        public ActionResult AddToCart()
+        {
+            return View();
+        }
+
+        // POST: AddToCart/Create
+        [HttpPost]
+        public ActionResult AddToCart(AddProduct AddToCart_obj)
+        {
+            try
+            {
+                ViewBag.LoginUser = Session["uname"];
+                using (SqlConnection con = new SqlConnection(constr))
+                {
+                    con.Open();
+                    string query = "sp_addToCard '" + AddToCart_obj.img_path + "'," + AddToCart_obj.product_id + ",'" + AddToCart_obj.product_name + "'," + AddToCart_obj.price + ",'" + ViewBag.LoginUser + "'";
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    int a = cmd.ExecuteNonQuery();                  
+                        if (a > 0)
+                        {
+                            ViewBag.Message = "Product Added";
+                            return RedirectToAction("ViewCart");
+
+                        }
+                        else
+                        {
+                            ViewBag.Message = "Not added";
+                            return RedirectToAction("ViewCart");
+                        }
+                    
+                }
+                // Redirect to the cart page after adding the product
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return RedirectToAction("ViewCart");
+            }
+        }
+
+        // GET: AddToCart/Create
+        public ActionResult ViewCart()
+        {
+            List<AddProduct> addProducts_obj = new List<AddProduct>();
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                using (SqlCommand cmd = new SqlCommand("sp_view_addToCard", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+                        while (sdr.Read())
+                        {
+                            addProducts_obj.Add(new AddProduct
+                            {
+                                id = Convert.ToInt32(sdr["id"]),
+                                product_id = Convert.ToInt32(sdr["product_id"]),
+                                product_name = sdr["product_name"].ToString(),
+                                price = sdr["price"].ToString(),
+                                img_path = sdr["img_path"].ToString(),
+                                user_name = sdr["user_name"].ToString()
+                            });
+                        }
+                    }
+                }
             }
 
             return View(addProducts_obj);

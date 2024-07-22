@@ -13,5 +13,6 @@ namespace ShoppingMartWithoutMVC.Models
         public string price { get; set; }
         public string img_path { get; set; }
         public HttpPostedFileBase ImageFile { get; set; }
+        public string user_name { get; set; }
     }
 }

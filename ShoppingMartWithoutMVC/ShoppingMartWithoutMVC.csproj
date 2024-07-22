@@ -194,6 +194,7 @@
     <Content Include="Views\tbl_signin_signup\SignUp.cshtml" />
     <Content Include="Views\tbl_signin_signup\SignIn.cshtml" />
     <Content Include="Views\AddProduct\UserProductView.cshtml" />
+    <Content Include="Views\AddProduct\ViewCart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

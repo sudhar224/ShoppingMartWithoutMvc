@@ -4,10 +4,13 @@
     ViewBag.Title = "UserProductView";
 }
 
-<h2>UserProductView</h2>
+<h2>Shooping List</h2>
+<h4>
+    Welcome @ViewBag.LoginUser enjoy shooping
+</h4>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+   
 </p>
 <div class="items-container">
     @foreach (var item in Model)
@@ -17,7 +20,7 @@
             <dl>
 
                 <dd>
-                    <img src="@Url.Content(item.img_path)" width="250" height="250" />
+                    <img src="@Url.Content(item.img_path)" width="250" height="250"  />
                 </dd>
 
                 <dt>
@@ -38,10 +41,19 @@
                 </dt>
                 <dd></dd>
 
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) 
-   
-                </td>
+                <dt>
+                    @using (Html.BeginForm("AddToCart", "AddProduct", FormMethod.Post))
+                    {
+                        @Html.HiddenFor(model => item.id)
+                        @Html.HiddenFor(model => item.product_id)
+                        @Html.HiddenFor(model => item.product_name)
+                        @Html.HiddenFor(model => item.price)
+                        @Html.HiddenFor(model => item.img_path)
+                    <input type="submit" class="btn btn-info mt-2" value="Add to Cart" />
+                    }
+                    
+
+                </dt>
             </dl>
         </div>
     }
@@ -55,12 +67,17 @@
 
     .item {
         margin: 10px;
-        flex: 0 0 250px; /* Adjust width as necessary */
+        flex: 0 0 230px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
     dl {
         display: flex;
         flex-direction: column;
+        text-align:center;
     }
 
     dt, dd {

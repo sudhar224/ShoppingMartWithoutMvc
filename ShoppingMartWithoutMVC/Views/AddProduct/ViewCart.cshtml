@@ -1,0 +1,47 @@
+﻿@model IEnumerable<ShoppingMartWithoutMVC.Models.AddProduct>
+
+@{
+    ViewBag.Title = "ViewCart";
+}
+
+<h2>ViewCart</h2>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success">
+        @ViewBag.Message
+    </div>
+}
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.Error
+    </div>
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Image</th>
+            <th>User Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.product_id</td>
+                <td>@item.product_name</td>
+                <td>@item.price</td>
+                <td>
+                    <img src="@item.img_path" alt="@item.product_name" width="100" />
+                </td>
+                <td>@item.user_name</td>
+            </tr>
+        }
+    </tbody>
+</table>
