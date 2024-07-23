@@ -246,7 +246,7 @@ namespace ShoppingMartWithoutMVC.Controllers
 
         // POST: AddToCart/Create
         [HttpPost]
-        public ActionResult AddToCart(AddProduct AddToCart_obj)
+        public ActionResult AddToCart(AddProduct AddToCart_obj )
         {
             try
             {
@@ -261,14 +261,12 @@ namespace ShoppingMartWithoutMVC.Controllers
                         {
                             ViewBag.Message = "Product Added";
                             return RedirectToAction("ViewCart");
-
                         }
                         else
                         {
                             ViewBag.Message = "Not added";
                             return RedirectToAction("ViewCart");
-                        }
-                    
+                        }                  
                 }
                 // Redirect to the cart page after adding the product
             }
