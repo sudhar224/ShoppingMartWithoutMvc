@@ -239,35 +239,59 @@ namespace ShoppingMartWithoutMVC.Controllers
             return View(addProducts_obj);
         }
 
-        public ActionResult AddToCart()
-        {
-            return View();
-        }
+     
 
         // POST: AddToCart/Create
-        [HttpPost]
-        public ActionResult AddToCart(AddProduct AddToCart_obj )
+        //[HttpPost]
+        public ActionResult AddToCart(int id )
         {
             try
             {
                 ViewBag.LoginUser = Session["uname"];
+
+                AddProduct addProduct_obj = new AddProduct();
                 using (SqlConnection con = new SqlConnection(constr))
                 {
+                    SqlCommand cmd = new SqlCommand("sp_product_details " + id, con);
                     con.Open();
-                    string query = "sp_addToCard '" + AddToCart_obj.img_path + "'," + AddToCart_obj.product_id + ",'" + AddToCart_obj.product_name + "'," + AddToCart_obj.price + ",'" + ViewBag.LoginUser + "'";
-                    SqlCommand cmd = new SqlCommand(query, con);
-                    int a = cmd.ExecuteNonQuery();                  
-                        if (a > 0)
+                    SqlDataReader sdr = cmd.ExecuteReader();
+                    while (sdr.Read())
+                    {
+                        addProduct_obj = new AddProduct
                         {
-                            ViewBag.Message = "Product Added";
-                            return RedirectToAction("ViewCart");
-                        }
-                        else
-                        {
-                            ViewBag.Message = "Not added";
-                            return RedirectToAction("ViewCart");
-                        }                  
+                            id = Convert.ToInt32(sdr["id"].ToString()),
+                            img_path = sdr["img_path"].ToString(),
+                            product_id = Convert.ToInt32(sdr["product_id"].ToString()),
+                            product_name = sdr["product_name"].ToString(),
+                            price = sdr["price"].ToString()
+                        };
+                    }
+                    string query = "sp_addToCard '" + addProduct_obj.img_path + "'," + addProduct_obj.product_id + ",'" + addProduct_obj.product_name + "'," + addProduct_obj.price + ",'" + ViewBag.LoginUser + "'";
+                    SqlCommand cmdi = new SqlCommand(query, con);
+                    int a = cmdi.ExecuteNonQuery();
+
+                    sdr.Close();
+                    con.Close();
                 }
+                return RedirectToAction("ViewCart");
+
+                //using (SqlConnection con = new SqlConnection(constr))
+                //{
+                //    con.Open();
+                //    string query = "sp_addToCard '" + AddToCart_obj.img_path + "'," + AddToCart_obj.product_id + ",'" + AddToCart_obj.product_name + "'," + AddToCart_obj.price + ",'" + ViewBag.LoginUser + "'";
+                //    SqlCommand cmd = new SqlCommand(query, con);
+                //    int a = cmd.ExecuteNonQuery();                  
+                //        if (a > 0)
+                //        {
+                //            ViewBag.Message = "Product Added";
+                //            return RedirectToAction("ViewCart");
+                //        }
+                //        else
+                //        {
+                //            ViewBag.Message = "Not added";
+                //            return RedirectToAction("ViewCart");
+                //        }                  
+                //}
                 // Redirect to the cart page after adding the product
             }
             catch (Exception ex)

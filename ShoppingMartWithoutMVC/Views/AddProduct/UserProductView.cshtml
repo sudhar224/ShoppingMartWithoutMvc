@@ -40,17 +40,17 @@
                     @Html.DisplayFor(modelItem => item.price)
                 </dt>
                 <dd></dd>
-
+                  
                 <dt>
                     @using (Html.BeginForm("AddToCart", "AddProduct", FormMethod.Post))
                     {
-                        @*@Html.HiddenFor(model => item.id)*@
+                        @Html.HiddenFor(model => item.id)
                         @Html.HiddenFor(model => item.img_path)
                         @Html.HiddenFor(model => item.product_id)
                         @Html.HiddenFor(model => item.product_name)
                         @Html.HiddenFor(model => item.price)
 
-                        <input type="submit" class="btn btn-info mt-2" value="Add to Cart" />
+                        <input type="submit" new { id = item.id } class="btn btn-info mt-2" value="Add to Cart" />
                     }
 
 
