@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 
@@ -14,5 +15,7 @@ namespace ShoppingMartWithoutMVC.Models
         public string img_path { get; set; }
         public HttpPostedFileBase ImageFile { get; set; }
         public string user_name { get; set; }
+        public int Quantity { get; set; }
+      
     }
 }
