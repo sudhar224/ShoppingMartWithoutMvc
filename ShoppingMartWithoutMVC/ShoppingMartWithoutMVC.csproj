@@ -121,12 +121,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AddProductController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\tbl_signin_signupController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AddProduct.cs" />
+    <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\tbl_signin_signup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -194,8 +196,7 @@
     <Content Include="Views\tbl_signin_signup\SignUp.cshtml" />
     <Content Include="Views\tbl_signin_signup\SignIn.cshtml" />
     <Content Include="Views\AddProduct\UserProductView.cshtml" />
-    <Content Include="Views\AddProduct\ViewCart.cshtml" />
-    <Content Include="Views\AddProduct\AddToCart.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

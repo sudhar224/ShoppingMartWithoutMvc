@@ -4,56 +4,36 @@
     ViewBag.Title = "UserProductView";
 }
 
-<h2>Shooping List</h2>
+<h2>Shopping List</h2>
 <h4>
-    Welcome @ViewBag.LoginUser enjoy shooping
+    Welcome @ViewBag.LoginUser, enjoy shopping!
 </h4>
 
-<p>
-   
-</p>
 <div class="items-container">
     @foreach (var item in Model)
     {
-       
-        <div class="item ">
+        <div class="item">
             <dl>
-
                 <dd>
-                    <img src="@Url.Content(item.img_path)" width="250" height="250"  />
+                    <img src="@Url.Content(item.img_path)" width="250" height="250" alt="@item.product_name" />
                 </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.product_id) :
-                    @Html.DisplayFor(modelItem => item.product_id)
-                </dt>
-                <dd></dd>
+                <dt>Product ID: @item.product_id</dt>
+                <dt>Product Name: @item.product_name</dt>
+                <dt>Price: @item.price</dt>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.product_name) :
-                    @Html.DisplayFor(modelItem => item.product_name)
-                </dt>
-                <dd></dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.price) :
-                    @Html.DisplayFor(modelItem => item.price)
-                </dt>
-                <dd></dd>
-                  
-                <dt>
-                    @using (Html.BeginForm("AddToCart", "AddProduct", FormMethod.Post))
+                    @using (Html.BeginForm("AddToCart", "Cart", FormMethod.Post))
                     {
-                        @Html.HiddenFor(model => item.id)
-                        @Html.HiddenFor(model => item.img_path)
-                        @Html.HiddenFor(model => item.product_id)
-                        @Html.HiddenFor(model => item.product_name)
-                        @Html.HiddenFor(model => item.price)
+                        @Html.Hidden("id", item.id)
+                        @Html.Hidden("img_path", item.img_path)
+                        @Html.Hidden("product_id", item.product_id)
+                        @Html.Hidden("product_name", item.product_name)
+                        @Html.Hidden("price", item.price)
 
-                        <input type="submit" new { id = item.id } class="btn btn-info mt-2" value="Add to Cart" />
+                        <input type="number" name="quantity" min="1" value="1" style="width:60px;" />
+                        <input type="submit" class="btn btn-info mt-2" value="Add to Cart" />
                     }
-
-
                 </dt>
             </dl>
         </div>
@@ -78,7 +58,7 @@
     dl {
         display: flex;
         flex-direction: column;
-        text-align:center;
+        text-align: center;
     }
 
     dt, dd {
