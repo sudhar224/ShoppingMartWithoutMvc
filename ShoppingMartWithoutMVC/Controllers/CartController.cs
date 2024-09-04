@@ -65,15 +65,9 @@ namespace ShoppingMartWithoutMVC.Controllers
                 sdr.Close();
                 con.Close();
             }
-            //return View(addProduct_obj);
+           
             return (addProduct_obj);
-            //{
-            //    id = id,
-            //    product_id = id,
-            //    product_name = "Sample Product", // Replace with actual product name
-            //    price = "100", // Replace with actual price
-            //    img_path = "path/to/image" // Replace with actual image path
-            //};
+         
         }
 
         [HttpPost]

@@ -8,7 +8,7 @@ namespace ShoppingMartWithoutMVC.Models
 {
     public class CartItem
     {
-        public AddProduct Product { get; set; } // Details of the product
-        public int Quantity { get; set; } // Quantity of the product in the cart
+        public AddProduct Product { get; set; } 
+        public int Quantity { get; set; } 
     }
 }
